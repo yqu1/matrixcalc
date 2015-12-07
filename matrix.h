@@ -16,23 +16,23 @@ class Matrix {
 	T *A;
 	int m, n;
 
-	Matrix(const int m, const int n);
-	Matrix(const int m, const int n, const T temp[]);
+	Matrix(const int m, const int n); //constructor with size specified, set matrix to identity matrix by default
+	Matrix(const int m, const int n, const T temp[]); //constructor with size specified and given values
 
-	~Matrix();
+	~Matrix(); //destructor
 
-	Matrix<T>& set(const T temp[]);
-	Matrix<T>& zero();
-	Matrix<T> transpose();
-	Matrix<T>  operator*(const Matrix<T>& B);
-	Matrix<T>  operator*(const T s);
-	Matrix<T>  operator+(const Matrix<T>& B);
-	Matrix<T>  operator-(const Matrix<T>& B);
-	Matrix<T>& operator=(const Matrix<T>& B);
-	void householderDecomposition(Matrix<T>& Q, Matrix<T>& R);
-	void lu(Matrix<T>& L, Matrix<T>& U);
-	T determinant();
-	void output();
+	Matrix<T>& set(const T temp[]); //set matrix with given values
+	Matrix<T>& zero(); //set matrix to 0 matrix
+	Matrix<T> transpose(); //transpose the matrix
+	Matrix<T>  operator*(const Matrix<T>& B); //matrix multiplication
+	Matrix<T>  operator*(const T s); //scalar multiplication
+	Matrix<T>  operator+(const Matrix<T>& B); //matrix addition
+	Matrix<T>  operator-(const Matrix<T>& B); //matrix subtraction
+	Matrix<T>& operator=(const Matrix<T>& B); //assignment operator
+	void householderDecomposition(Matrix<T>& Q, Matrix<T>& R); //perform QR decomposition
+	void lu(Matrix<T>& L, Matrix<T>& U); //perform LU decomposition
+	T determinant(); //calculate determinant
+	void output(); //print matrix
 };
 
 template <class T>
@@ -42,9 +42,9 @@ void Matrix<T>::output() {
 		for (int i = 0; i < n; i++) {
 			std::cout << std::setw(16) << A[j * n + i] << "   ";
 		}
-		std::cout << std::endl;
+		cout << endl;
 	}
-	std::cout << std::endl;
+	cout << endl;
 }
 
 //Construct a matrix whose i,i element is 1, other 0
@@ -196,36 +196,36 @@ void Matrix<T>::householderDecomposition(Matrix<T>& Q, Matrix<T>& R) {
 template <class T>
 T Matrix<T>::determinant()   
 {
- int i,j,sum = 0;
- Matrix<T> c(n-1,n-1);
- if(n==2)
-  {                                        //BASE CONDITION
-	sum = A[0]*A[1 * n +1] - A[0 * n +1] * A[1 * n +0];
-	return sum;
-  }
- for(int p=0;p<n;p++)
- {
-  int h = 0,k = 0;
-  for(i=1;i<n;i++)
-  {
-	for( j=0;j<n;j++)
-	{
-	 if(j==p)
-	  continue;
-	 c.A[h * (n-1) +k] = A[i * n +j];
-	 k++;
-	 if(k == n - 1)
-	  {
-		 h ++;
-		 k = 0;
-	  }
+ 	int i,j,sum = 0;
+ 	Matrix<T> c(n-1,n-1);
+ 	if(n==2)
+ 	{                                        //BASE CONDITION
+		sum = A[0]*A[1 * n +1] - A[0 * n +1] * A[1 * n +0];
+		return sum;
+  	}
+ 	for(int p=0;p<n;p++)
+ 	{
+  		int h = 0,k = 0;
+ 		for(i=1;i<n;i++)
+  		{
+			for( j=0;j<n;j++)
+			{
+	 			if(j==p)
+	 			continue;
+	 			c.A[h * (n-1) +k] = A[i * n +j];
+	 			k++;
+	 			if(k == n - 1)
+	 			{
+					h ++;
+		 			k = 0;
+	  			}
 
+			}
+  		}
+
+ 	   sum = sum + A[0 * n + p] * pow(-1,p) * c.determinant();
 	}
-  }
-
-  sum = sum + A[0 * n + p]*pow(-1,p)*c.determinant();
- }
- return sum;
+ 		return sum;
 }
 
 //LU decomposition
