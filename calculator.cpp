@@ -17,19 +17,19 @@ int main()
 	cout << "c) determinant" << endl;
 	cout << "d) quit" << endl;
 
-	cin>>option;
+	cin >> option;
 	option = tolower(option);
 
-	while(option!='d')
+	while(option != 'd')
 	{
 
-		if(option == 'a')  luDecomp(); 
+		if (option == 'a')  luDecomp(); 
 
-		else if(option == 'b')  qrDecomp(); 
+		else if (option == 'b')  qrDecomp(); 
 
-		else if(option == 'c')  determinant(); 
+		else if (option == 'c')  determinant(); 
 
-		else { cout << "invalid input"; }
+		else cout << "invalid input"; 
 
 		cout << "Choose calculation: " << endl;
 		cout << "a) LU decomposition" << endl;
@@ -52,16 +52,16 @@ void qrDecomp()
 {
     int m,n;
 
-    cout << "enter matrix rows: ";
+    cout << "Enter matrix rows: ";
     cin>>m;
-    cout << "enter matrix columns: ";
+    cout << "Enter matrix columns: ";
     cin>>n;
 
-    double temp[m*n];
+    double temp[m * n];
 
     for (int i = 0; i < m * n; i++)
     {
-        cout << "enter element: " << endl;
+        cout << "Enter element: " << endl;
         cin>>temp[i];
     }
 
@@ -100,12 +100,12 @@ void luDecomp()
     Matrix<double> L__(n,n), U__(n,n);
     L__.zero(); U__.zero();
 
-    cout << "matrix you entered is: " << endl;
+    cout << "Matrix you entered is: " << endl;
     A__.output();
 
     if (A__.determinant() != 0)
     {
-        cout << "determinant is: " << A__.determinant() << endl;
+        cout << "Determinant is: " << A__.determinant() << endl;
         A__.lu(L__, U__);
         cout  <<  "\nL Decomposition\n\n";
         L__.output();
@@ -115,13 +115,13 @@ void luDecomp()
         (L__*U__).output();
     }
 
-    else {cout << "matrix is singular" << endl;}
+    else {cout << "Matrix is singular" << endl;}
 }
 
 void determinant()
 {
     int n = 0, i = 0, j = 0;
-    cout  <<  "Enter size of Square matrix : ";
+    cout  <<  "Enter size of square matrix : ";
     cin >> n;
     double temp[n*n], l[n*n], u[n*n];
 
@@ -133,9 +133,9 @@ void determinant()
 
     Matrix<double> A__(n,n,temp);
 
-    cout << "matrix you entered is: " << endl;
+    cout << "Matrix you entered is: " << endl;
     A__.output();
 
-    cout << "determinant is: " << A__.determinant() << endl;
+    cout << "Determinant is: " << A__.determinant() << endl;
 
 }
