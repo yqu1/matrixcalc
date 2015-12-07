@@ -98,44 +98,44 @@ Matrix<T> Matrix<T>::transpose() {
 //Matrix multiplication
 template <class T>
 Matrix<T> Matrix<T>::operator*(const Matrix<T>& B) {
-	Matrix<T> Temp(m, B.n);
+	Matrix<T> temp(m, B.n);
 	for (int j = 0; j < m; j++)
 		for (int i = 0; i < B.n; i++) {
-			Temp.A[j * B.n + i] = 0.0;
+			temp.A[j * B.n + i] = 0.0;
 			for (int k = 0; k < n; k++)
-				Temp.A[j * B.n + i] += A[j * n + k] * B.A[k * B.n + i];
+				temp.A[j * B.n + i] += A[j * n + k] * B.A[k * B.n + i];
 		}
-	return Temp;
+	return temp;
 }
 
 //matrix multiplication with constants
 template <class T>
 Matrix<T> Matrix<T>::operator*(const T s) {
-	Matrix<T> Temp(m, n);
+	Matrix<T> temp(m, n);
 	for (int j = 0; j < m; j++)
 		for (int i = 0; i < n; i++)
-			Temp.A[j * n + i] = A[j * n + i] * s;
-	return Temp;
+			temp.A[j * n + i] = A[j * n + i] * s;
+	return temp;
 }
 
 //matrix addtion
 template <class T>
 Matrix<T> Matrix<T>::operator+(const Matrix<T>& B) {
-	Matrix<T> Temp(m, n);
+	Matrix<T> temp(m, n);
 	for (int j = 0; j < m; j++)
 		for (int i = 0; i < n; i++)
-			Temp.A[j * n + i] = A[j * n + i] + B.A[j * n + i];
-	return Temp;
+			temp.A[j * n + i] = A[j * n + i] + B.A[j * n + i];
+	return temp;
 }
 
 //matrix subtraction
 template <class T>
 Matrix<T> Matrix<T>::operator-(const Matrix<T>& B) {
-	Matrix<T> Temp(m, n);
+	Matrix<T> temp(m, n);
 	for (int j = 0; j < m; j++)
 		for (int i = 0; i < n; i++)
-			Temp.A[j * n + i] = A[j * n + i] - B.A[j * n + i];
-	return Temp;
+			temp.A[j * n + i] = A[j * n + i] - B.A[j * n + i];
+	return temp;
 }
 
 //assignment operator
@@ -196,27 +196,27 @@ void Matrix<T>::householderDecomposition(Matrix<T>& Q, Matrix<T>& R) {
 template <class T>
 T Matrix<T>::determinant()   
 {
- 	int i,j,sum = 0;
- 	Matrix<T> c(n-1,n-1);
- 	if(n==2)
- 	{                                        //BASE CONDITION
+ 	int i, j, sum = 0;
+ 	Matrix<T> c(n - 1, n - 1);
+ 	if (n == 2)
+ 	{										//BASE CONDITION
 		sum = A[0]*A[1 * n +1] - A[0 * n +1] * A[1 * n +0];
 		return sum;
   	}
- 	for(int p=0;p<n;p++)
+ 	for(int p = 0; p < n; p++)
  	{
-  		int h = 0,k = 0;
- 		for(i=1;i<n;i++)
+  		int h = 0, k = 0;
+ 		for (i = 1; i < n; i++)
   		{
-			for( j=0;j<n;j++)
+			for (j = 0; j < n; j++)
 			{
-	 			if(j==p)
+	 			if (j == p)
 	 			continue;
-	 			c.A[h * (n-1) +k] = A[i * n +j];
+	 			c.A[h * (n - 1) +k] = A[i * n +j];
 	 			k++;
-	 			if(k == n - 1)
+	 			if (k == n - 1)
 	 			{
-					h ++;
+					h++;
 		 			k = 0;
 	  			}
 
@@ -233,46 +233,45 @@ template <class T>
 void Matrix<T>::lu(Matrix<T>& L, Matrix<T>& U)
 {
 
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = 0; j < n; j++)
-        {
-            if (j < i)
-            {
-                L.A[j * n + i] = 0;
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			if (j < i)
+			{
+				L.A[j * n + i] = 0;
 
-            }
+			}
 
-            else
-            {
-                L.A[j * n + i] = A[j * n + i];
+			else
+			{
+				L.A[j * n + i] = A[j * n + i];
 
-                for (int k = 0; k < i; k++)
-                {	
-          
-                    L.A[j * n + i] = L.A[j * n + i] - L.A[j * n + k] * U.A[k * n + i];
+				for (int k = 0; k < i; k++)
+				{	
+		  
+					L.A[j * n + i] = L.A[j * n + i] - L.A[j * n + k] * U.A[k * n + i];
 
-                }
-            }
-        }
-        for (int j = 0; j < n; j++)
-        {
-            if (j < i)
-                U.A[i * n + j] = 0;
-            else if (j == i)
-                U.A[i * n + j] = 1;
-            else
-            {
-                U.A[i * n + j] = A[i * n + j] / L.A[i * n + i];
-                for (int k = 0; k < i; k++)
-                {
-                    U.A[i * n + j] = U.A[i * n + j] - ((L.A[i * n +k] * U.A[k * n + j]) / L.A[i * n + i]);
-                }
-            }
-        }
-    }
+				}
+			}
+		}
+		for (int j = 0; j < n; j++)
+		{
+			if (j < i)
+				U.A[i * n + j] = 0;
+			else if (j == i)
+				U.A[i * n + j] = 1;
+			else
+			{
+				U.A[i * n + j] = A[i * n + j] / L.A[i * n + i];
+				for (int k = 0; k < i; k++)
+				{
+					U.A[i * n + j] = U.A[i * n + j] - ((L.A[i * n +k] * U.A[k * n + j]) / L.A[i * n + i]);
+				}
+			}
+		}
+	}
 }
 
 
 #endif
-
