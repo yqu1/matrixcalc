@@ -53,16 +53,16 @@ void qrDecomp()
     int m,n;
 
     cout << "Enter matrix rows: ";
-    cin>>m;
+    cin >> m;
     cout << "Enter matrix columns: ";
-    cin>>n;
+    cin >> n;
 
     double temp[m * n];
 
     for (int i = 0; i < m * n; i++)
     {
         cout << "Enter element: " << endl;
-        cin>>temp[i];
+        cin >> temp[i];
     }
 
 
@@ -92,7 +92,7 @@ void luDecomp()
 
     for (i = 0; i < n * n; i++)
     {
-        cout  <<  "Enter element: " << endl;
+        cout << "Enter element: " << endl;
         cin >> temp[i];
     }
 
@@ -115,7 +115,7 @@ void luDecomp()
         (L__*U__).output();
     }
 
-    else {cout << "Matrix is singular" << endl;}
+    else cout << "Matrix is singular" << endl;
 }
 
 void determinant()
